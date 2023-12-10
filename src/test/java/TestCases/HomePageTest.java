@@ -1,19 +1,25 @@
 package TestCases;
 
 import Pages.HomePage;
+import Pages.LoginPage;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class HomePageTest extends BaseTest {
-    HomePage homePage ;
+    HomePage homePage;
+    LoginPage loginPage;
 
-
-   @Test
-    public void loginWithValidCredentials() throws InterruptedException {
-        homePage = new HomePage ();
-        homePage.inputCredentials ("standard_user","secret_sauce");
-        homePage.login ();
+    @BeforeMethod
+    public void validLogin() throws InterruptedException {
+        loginPage = new LoginPage ();
+        homePage = loginPage.doLogin ();
     }
+    @Test
+    public void scrollTest() throws InterruptedException {
+        homePage.scrollBottomTop ();
+    }
+    @Test
+    public void findProduct(){
 
-
-
+    }
 }
