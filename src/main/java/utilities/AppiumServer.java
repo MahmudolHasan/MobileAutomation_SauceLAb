@@ -42,7 +42,7 @@ public class AppiumServer {
     }
     public static void stop(){
         if(server != null){
-            System.out.println ("Appium server is stopped");
+            System.out.println ("Appium server is stopped!");
             server.stop ();
 
         }

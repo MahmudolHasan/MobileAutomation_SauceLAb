@@ -1,20 +1,14 @@
 package TestCases;
 
 import Pages.HomePage;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.Test;
-import utilities.DriverSetup;
 
-import java.sql.SQLOutput;
-import java.time.Duration;
-
-public class HomePageTest extends DriverSetup {
+public class HomePageTest extends BaseTest {
     HomePage homePage ;
 
 
-   // @Test
-    public void loginWithValidCredentials(){
+   @Test
+    public void loginWithValidCredentials() throws InterruptedException {
         homePage = new HomePage ();
         homePage.inputCredentials ("standard_user","secret_sauce");
         homePage.login ();

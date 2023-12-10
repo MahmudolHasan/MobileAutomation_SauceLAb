@@ -1,39 +1,21 @@
-package utilities;
+package TestCases;
 
+import DriverFactory.DriverSetup;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import utilities.AppiumServer;
 
-import java.net.URL;
-
-public class DriverSetup {
-
-    private static final ThreadLocal<AndroidDriver> LocalDriver = new ThreadLocal<> ();
-    private static  URL url ;
+public class BaseTest {
+    //private static URL url ;
+    static AndroidDriver driver;
 
     //static AppiumServer server;
     private static void startAppiumServer(){
 
         AppiumServer.start ();
     }
-
-    //public void setLocalDriver(AndroidDriver driver){
-//        DriverSetup.LocalDriver.set (driver);
-//    }
-
-    public static AndroidDriver getLocalDriver(){
-        return  DriverSetup.LocalDriver.get ();
-    }
-
-    public static AndroidDriver createDriver(URL url,DesiredCapabilities caps){
-        return new AndroidDriver (url,caps);
-    }
-
-
-
-
-
     @BeforeSuite
     public static synchronized void openServer (){
         DesiredCapabilities caps = new DesiredCapabilities ();
@@ -47,9 +29,9 @@ public class DriverSetup {
 
 
         try{
-                DriverSetup.startAppiumServer ();
-                AndroidDriver driver = createDriver (AppiumServer.getUrl (),caps);
-                LocalDriver.set (driver);
+            startAppiumServer ();
+           driver = DriverSetup.createDriver (AppiumServer.getUrl (),caps);
+            DriverSetup.setLocalDriver (driver);
         } catch (Exception e) {
             System.out.println ("Problem in BeforeSuite!");
             throw new RuntimeException (e);
@@ -59,13 +41,11 @@ public class DriverSetup {
 
     @AfterSuite
     public static synchronized void teardown(){
-        if(LocalDriver.get () != null)
+        if(driver != null)
         {
-            LocalDriver.get ().quit ();
+           driver.quit ();
             AppiumServer.stop ();
         }
 
     }
-
-
 }
