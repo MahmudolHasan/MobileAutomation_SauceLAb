@@ -11,13 +11,15 @@ public class BaseTest {
     //private static URL url ;
     static AndroidDriver driver;
 
+
     //static AppiumServer server;
-    private static void startAppiumServer(){
+    private static void startAppiumServer () {
 
         AppiumServer.start ();
     }
+
     @BeforeSuite
-    public static synchronized void openServer (){
+    public static synchronized void openServer () {
         DesiredCapabilities caps = new DesiredCapabilities ();
         caps.setCapability ("platformName", "android");
         //caps.setCapability ("enforceXPath1", true);
@@ -28,9 +30,13 @@ public class BaseTest {
         caps.setCapability ("appActivity", "com.swaglabsmobileapp.MainActivity");
 
 
-        try{
+        try {
             startAppiumServer ();
-           driver = DriverSetup.createDriver (AppiumServer.getUrl (),caps);
+            System.out.println ("Server: " + AppiumServer.getUrl ());
+            driver = DriverSetup.createDriver (AppiumServer.getUrl (), caps);
+            //driver = new EventFiringDecorator<> (listener).decorate (driver);
+//            driver = (AndroidDriver) new EventFiringDecorator<> (AndroidDriver.class,listener).decorate (driver);
+            //driver = EventFiringWebDriverFactory.getEventFiringWebDriver(driver, new WebListerner());
             DriverSetup.setLocalDriver (driver);
         } catch (Exception e) {
             System.out.println ("Problem in BeforeSuite!");
@@ -40,10 +46,9 @@ public class BaseTest {
     }
 
     @AfterSuite
-    public static synchronized void teardown(){
-        if(driver != null)
-        {
-           driver.quit ();
+    public static synchronized void teardown () {
+        if (driver != null) {
+            driver.quit ();
             AppiumServer.stop ();
         }
 

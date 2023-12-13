@@ -2,6 +2,7 @@ package TestCases;
 
 import Pages.HomePage;
 import Pages.LoginPage;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -10,16 +11,32 @@ public class HomePageTest extends BaseTest {
     LoginPage loginPage;
 
     @BeforeMethod
-    public void validLogin() throws InterruptedException {
+    public void validLogin () throws InterruptedException {
         loginPage = new LoginPage ();
         homePage = loginPage.doLogin ();
     }
-    @Test
-    public void scrollTest() throws InterruptedException {
+
+    @Test(priority = 0)
+    public void scrollTest () throws InterruptedException {
         homePage.scrollBottomTop ();
     }
-    @Test
-    public void findProduct(){
+
+    @Test(priority = 1)
+    public void addToCart_BikeLight () throws InterruptedException {
+        int cartProductNumber = homePage.addCartBikeLight ();
+        Thread.sleep (2);
+        Assert.assertEquals (cartProductNumber, 1, "No products added to cart!");
 
     }
+
+    @Test(priority = 2)
+    public void removeFromCart_BikeLight () throws InterruptedException {
+        addToCart_BikeLight ();
+        int actualProductNumber = homePage.removeBikeLight ();
+        Assert.assertEquals (actualProductNumber, -1, "No product removed from cart!");
+
+    }
+
+
 }
+

@@ -4,24 +4,26 @@ import DriverFactory.DriverSetup;
 import com.google.common.collect.ImmutableList;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Pause;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
+import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.lang.reflect.Method;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class util extends DriverSetup {
 
-    AndroidDriver driver = getLocalDriver ();
+     AndroidDriver driver = getLocalDriver ();
 
 
     public WebElement findElement (By locator) throws InterruptedException {
@@ -48,6 +50,16 @@ public class util extends DriverSetup {
 
     public void clickOnEle (By locator) throws InterruptedException {
         findElement (locator).click ();
+    }
+
+    public String getEleText(By locator) throws InterruptedException {
+        String text = null;
+        try{
+            text = findElement (locator).getText ();
+        }catch(TimeoutException e){
+            System.out.println ("No text Founded!Returned Null value!");
+        }
+        return text;
     }
 
     private void waitForElement (By locator) {
@@ -113,7 +125,27 @@ public class util extends DriverSetup {
         Thread.sleep (200); //wait of 10 seconds
 
     }
+    public static void takeScreenshot (Method method){
+        TakesScreenshot takesScreenshot = (TakesScreenshot) getLocalDriver () ;
+        File source = takesScreenshot.getScreenshotAs(OutputType.FILE);
+        File destination = new File(
+                System.getProperty("user.dir") + "/src/test/resources/failed_test_screenshots/" +System.currentTimeMillis ()
+                        +"-"+method.getName ()+ ".png");
 
+        try {
+            FileHandler.copy(source, destination);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String sortWords(String word01, String word02){
+        if(word01.compareTo (word02) > 0){
+            return word02;
+        }
+        return word01;
+
+    }
     //////////////////////////////Private Functions//////////////////////////////////////
     private Map getPoints () {
         Dimension size = driver.manage ().window ().getSize ();
@@ -124,4 +156,5 @@ public class util extends DriverSetup {
         pointMap.put ("leftPoint", new Point ((int) (size.getWidth () - size.getWidth () * .8), size.getHeight () / 2));
         return pointMap;
     }
+
 }
