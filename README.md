@@ -9,14 +9,9 @@ This repository contains code and instructions for performing mobile automation 
 3. [Project Structure](#project-structure)
 4. [Test Scenarios](#test-scenarios)
    - [Login Test](#login-test)
-   - [Product Browsing Test](#product-browsing-test)
-   - [Shopping Cart Test](#shopping-cart-test)
-   - [Overview Test](#overview-test)
-   - [Confirmation Test](#confirmation-test)
-5. [Running Tests](#running-tests)
-6. [Reporting](#reporting)
-7. [Contributing](#contributing)
-8. [License](#license)
+   - [HomePageTest](#homepage_test)
+   - [Cart-Test](#cart-test)
+6. [Reports](#reports)
 
 ## Overview
 
@@ -45,45 +40,36 @@ Follow these steps to set up and run mobile automation tests using Sauce Labs wi
    cd saucelabs-mobile-automation-java-
    ```
 2. Install Allure Reports
-   - Follow [office docs](https://allurereport.org/docs/gettingstarted-installation/) for installing Allure.
+   - Follow [official installation guide](https://allurereport.org/docs/gettingstarted-installation/) for installing Allure.
 ## Project Structure
    This project was created following the PAGE OBJECT MODEL(POM) design.
    
 **src/main/java**
-
-**pages**: Contains page classes representing different pages/screens of the SauceLab mobile app.</br>
-**LoginPage.java**: Page class for the login page.
-**HomePage.java**: Page class for the home page.
-**CartPage.java**: Page class for the shopping cart page.
-**OverviewPage.java**: Page class for the order overview page.
-**ConfirmationPage.java**: Page class for the order confirmation page.
-**tests: Test classes corresponding to different test scenarios.
-LoginTest.java: Test class for the login functionality.
-ProductBrowsingTest.java: Test class for product browsing and adding to the cart.
-ShoppingCartTest.java: Test class for shopping cart management.
-OverviewTest.java: Test class for the order overview page.
-ConfirmationTest.java: Test class for the order confirmation page.
-utilities: Utility classes, helper methods, and common functionalities.
-DriverFactory.java: Class for initializing and managing the WebDriver instance.
-ConfigReader.java: Class for reading configuration properties.
-src/test/resources
-
-testdata: Test data files or configuration files used in the tests.
-users.json: JSON file containing login credentials.
-src/test/java
-
-listeners: TestNG listeners for capturing test results.
-TestListener.java: Custom listener for capturing screenshots on test failure.
-base: Base test class for setting up and tearing down test execution.
-BaseTest.java: Base test class with common setup and teardown methods.
-target
-
-Compiled classes and generated reports.
-testng.xml
-
-TestNG configuration file specifying test suites and parameters.
-pom.xml
-
+### DriverFactory
+DriverFactory package contains utility classes for managing the AndroidDriver instance used throughout the test suite.
+### Pages 
+This package contains page classes representing different pages/screens of the SauceLab mobile app. 
+### Utilities
+This package contains Utility classes, helper methods, and common functionalities.
+**src/test/java**
+### TestCases
+Contains test classes corresponding to different test scenarios/pages.
+### TestRunner 
+This contains various XML files to run the tests.
+### Others 
+**pom.xml**
 Maven Project Object Model file with dependencies and plugins.
+
+## Reports 
+Test results are reported using Allure, a powerful open-source framework designed to create detailed and interactive test reports. Allure provides rich visualizations and insights into test execution, making it easier to analyze test outcomes.
+- An overview of the whole Project
+![Overview](./src/resources/overview.png)
+- Test Suites
+![Overview](./src/resources/Suites.png)
+- Test Status
+![Test Status Details](./src/resources/Status.png)
+
+
+
 
   
