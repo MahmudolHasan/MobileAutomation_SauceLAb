@@ -2,6 +2,7 @@ package Pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
+import org.testng.Assert;
 import utilities.util;
 
 public class HomePage extends util {
@@ -45,6 +46,10 @@ public class HomePage extends util {
 
     }
 
+    public boolean verifyHomePage() throws InterruptedException {
+        return (elementIsDisplayed (btn_toggleView));
+    }
+
     public String toggleView () throws InterruptedException {
         clickOnEle (btn_toggleView);
         return getEleText (btn_addProductText);
@@ -84,6 +89,10 @@ public class HomePage extends util {
         String text = getEleText (cartProducts);
         if(text==null) return -1;
         return Integer.parseInt (text);
+    }
+    public Cart moveToCart() throws InterruptedException {
+        clickOnEle (btn_cart);
+        return new Cart ();
     }
 
 }

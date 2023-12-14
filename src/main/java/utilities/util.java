@@ -144,7 +144,10 @@ public class util extends DriverSetup {
             return word02;
         }
         return word01;
+    }
 
+    public boolean elementIsDisplayed(By locator) throws InterruptedException {
+        return findElement (locator).isDisplayed ();
     }
     //////////////////////////////Private Functions//////////////////////////////////////
     private Map getPoints () {
