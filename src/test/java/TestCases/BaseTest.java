@@ -3,9 +3,13 @@ package TestCases;
 import DriverFactory.DriverSetup;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import utilities.AppiumServer;
+
+import java.net.URL;
 
 public class BaseTest {
     //private static URL url ;
@@ -18,7 +22,7 @@ public class BaseTest {
         AppiumServer.start ();
     }
 
-    @BeforeSuite
+    @BeforeMethod
     public static synchronized void openServer () {
         DesiredCapabilities caps = new DesiredCapabilities ();
         caps.setCapability ("platformName", "android");
@@ -34,9 +38,7 @@ public class BaseTest {
             startAppiumServer ();
             System.out.println ("Server: " + AppiumServer.getUrl ());
             driver = DriverSetup.createDriver (AppiumServer.getUrl (), caps);
-            //driver = new EventFiringDecorator<> (listener).decorate (driver);
-//            driver = (AndroidDriver) new EventFiringDecorator<> (AndroidDriver.class,listener).decorate (driver);
-            //driver = EventFiringWebDriverFactory.getEventFiringWebDriver(driver, new WebListerner());
+            //driver = DriverSetup.createDriver (new URL (  "http://192.168.100.4:4723/"), caps);
             DriverSetup.setLocalDriver (driver);
         } catch (Exception e) {
             System.out.println ("Problem in BeforeSuite!");
@@ -45,7 +47,8 @@ public class BaseTest {
 
     }
 
-    @AfterSuite
+
+    @AfterMethod
     public static synchronized void teardown () {
         if (driver != null) {
             driver.quit ();
